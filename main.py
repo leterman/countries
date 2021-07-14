@@ -34,11 +34,12 @@ if __name__ == '__main__':
     output_file.close()
 
 #задание 2
-def md5(fname):
-    hash_md5 = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in f:
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+def my_generator(fname):
+    with open(fname, "r") as f:
+        lines = f.readlines()
+        for line in lines:
+            yield hashlib.md5(line.encode()).hexdigest()
 
-md5('countries_with_links.txt')
+
+for i in my_generator('countries_with_links.txt'):
+    print(i)
